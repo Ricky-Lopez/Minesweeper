@@ -76,13 +76,43 @@ def create_userField(dim) : #field duplicate for user exploration
         field.append(c)
     return field
 
-def print_field(field,dim): #prints out the field, with all numbers and mines unhidden. 
+def print_field(field,dim): #prints out the field. 
+    columns = rows = 1
+    print(" ",end="      ")
     for i in range(dim):
+        if(columns < 10):
+            print(columns, end="    ")
+        elif(columns < 100):
+            print(columns, end="   ")
+        elif(columns < 1000):
+            print(columns, end="  ")
+        else:
+            print(columns, end=" ")
+        columns = columns + 1
+
+    print("\n")
+    for i in range(dim):
+        if(rows < 10):
+            print(rows, end="      ")
+        elif(rows < 100):
+            print(rows, end="     ")
+        elif(rows < 1000):
+            print(rows, end="    ")
+        else:
+            print(rows, end="   ")
+        rows = rows + 1
         for j in range(dim):
             print(field[i][j],end="    ")
         print()
     print()
- 
+
+#check_position
+#real_field = actual 2Dimensional array used to hold data for mines, and mine proximities.
+#user_field = 2dimensional copy that holds data hidden and non hidden spaces as the game progresses.
+#   pos     = position queried by user.
+check_position(real_field, user_field, pos) :
+    return
+
 #Main Function
 if __name__ == "__main__":
 
