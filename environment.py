@@ -115,6 +115,15 @@ def check_position(real_field, user_field, pos) : #checks if position queried is
         user_field[pos[0]][pos[1]] = 'X'
         print("-- GAMEOVER --")
         return False
+
+    elif (real_field[pos[0]][pos[1]] == '0') : #TODO: Does not work yet! Fix later
+        '''
+        print("does it get in here?")
+        if((pos[0]+1) >= 0 and (pos[0]+1) < dim) :
+            check_position(real_field, user_field, [pos[0]+1, pos[1]]) #checks the position on the right
+        if((pos[0]-1) >= 0 and (pos[0]-1) < dim) :
+            check_position(real_field, user_field, [pos[0]-1, pos[1]]) #checks the position on the left
+        '''
     else:
         user_field[pos[0]][pos[1]] = real_field[pos[0]][pos[1]]
     return True
@@ -152,17 +161,27 @@ if __name__ == "__main__":
         #TODO add Agent algorithm.
         agent = 0
     else:           #User plays
-        print("RULES:\n\n1. Enter the position you would like to query in the format \"x,y\".\n2. To quit, enter \"q\".\n3. Have fun playing!\n\n")
+        print("\n******** MINESWEEPER *********\nRULES:\n\n1. Enter the position you would like to query in the format \"x,y\".\n2. To flag, type \"flag \" before your position. (Don't forget the space!)\n3. To quit, enter \"q\".\n4. Have fun playing!\n\n")
         gameContinue = True
+        print_field(user_field, dim)
         while(gameContinue) :
-            print_field(user_field, dim)
             user_input = input("Please enter the position you would like to check: ")
+            user_input.lower()
             if(user_input == "q") :
                 gameContinue = False
+            elif "flag" in user_input : # Flag Feature!
+                try:
+                    user_field[int(user_input[7])][int(user_input[5])] = 'F'
+                    print()
+                    print_field(user_field, dim)
+                except ValueError:
+                    print("Invalid format. Please try again.\n")
             else:
                 try:
-                    gameContinue = check_position(real_field, user_field, [int(user_input[0]), int(user_input[2])])
+                    gameContinue = check_position(real_field, user_field, [int(user_input[2]), int(user_input[0])])
                     gameContinue = gameContinue and not(win_condition(user_field))
+                    print()
+                    print_field(user_field, dim)
                 except ValueError:
-                    print("Invalid format. Please try again.")
+                    print("Invalid format. Please try again.\n")
 
