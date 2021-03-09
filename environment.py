@@ -7,7 +7,7 @@ import copy
 from random import randint
 
 
-def create_minefield(dim,n): # creates a minefield given dim dimension and n mines.
+def create_minefield(dim,n): #creates a minefield given dim dimension and n mines.
     field=[]
     for i in range(dim): #minefield creation
         c=[]
@@ -77,7 +77,7 @@ def create_userField(dim) : #field duplicate for user exploration
     return field
 
 def print_field(field,dim): #prints out the field. 
-    columns = rows = 1
+    columns = rows = 0
     print(" ",end="      ")
     for i in range(dim):
         if(columns < 10):
@@ -110,17 +110,59 @@ def print_field(field,dim): #prints out the field.
 #real_field = actual 2Dimensional array used to hold data for mines, and mine proximities.
 #user_field = 2dimensional copy that holds data hidden and non hidden spaces as the game progresses.
 #   pos     = position queried by user.
-check_position(real_field, user_field, pos) :
-    return
+def check_position(real_field, user_field, pos) : #checks if position queried is a mine, and if not, reveals space in user_field. 
+    if (real_field[pos[0]][pos[1]] == 'X') : #Position queried is a mine; GAMEOVER
+        user_field[pos[0]][pos[1]] = 'X'
+        print("-- GAMEOVER --")
+        return False
+    else:
+        user_field[pos[0]][pos[1]] = real_field[pos[0]][pos[1]]
+    return True
+    #TODO: add multispace clear when position queried has no mine proximities.
+
+
+def win_condition(user_field) : #Checks if win condition has been met.
+    for i in range(len(user_field)) :
+        for j in range(len(user_field)) :
+            if(user_field[i][j] == '-') :
+                return False
+    return True
 
 #Main Function
 if __name__ == "__main__":
 
-    dim = int(input("Please input the size of the minefield: "))
-    mines = int(input("Please input the amount of mines in the minefield: "))
+    dim = int(input("Please input the size of the minefield:\n"))
+    mines = int(input("Please input the amount of mines in the minefield:\n"))
+    whoPlays = input("Let the Agent play? (y/n)\n")
+    whoPlays.lower()
+    if(whoPlays == 'y' or whoPlays == 'yes'):
+        whoPlays = True
+    elif(whoPlays == 'n' or whoPlays == 'no'):
+        whoPlays = False
+    else:
+        print("I'm sorry, I don't think I understand. I'll just let the Agent play.", end="\n\n")
+        whoPlays = False
 
-    minefield = create_minefield(dim, mines)
-    userField = create_userField(dim)
-    print_field(minefield, dim)
-    print_field(userField, dim)
-    
+    real_field = create_minefield(dim, mines)
+    user_field = create_userField(dim)
+    #print_field(real_field, dim)
+    #print_field(user_field, dim)
+
+    if(whoPlays) :  #Agent plays
+        #TODO add Agent algorithm.
+        agent = 0
+    else:           #User plays
+        print("RULES:\n\n1. Enter the position you would like to query in the format \"x,y\".\n2. To quit, enter \"q\".\n3. Have fun playing!\n\n")
+        gameContinue = True
+        while(gameContinue) :
+            print_field(user_field, dim)
+            user_input = input("Please enter the position you would like to check: ")
+            if(user_input == "q") :
+                gameContinue = False
+            else:
+                try:
+                    gameContinue = check_position(real_field, user_field, [int(user_input[0]), int(user_input[2])])
+                    gameContinue = gameContinue and not(win_condition(user_field))
+                except ValueError:
+                    print("Invalid format. Please try again.")
+
