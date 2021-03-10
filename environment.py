@@ -116,14 +116,38 @@ def check_position(real_field, user_field, pos) : #checks if position queried is
         print("-- GAMEOVER --")
         return False
 
-    elif (real_field[pos[0]][pos[1]] == '0') : #TODO: Does not work yet! Fix later
-        '''
-        print("does it get in here?")
-        if((pos[0]+1) >= 0 and (pos[0]+1) < dim) :
-            check_position(real_field, user_field, [pos[0]+1, pos[1]]) #checks the position on the right
-        if((pos[0]-1) >= 0 and (pos[0]-1) < dim) :
-            check_position(real_field, user_field, [pos[0]-1, pos[1]]) #checks the position on the left
-        '''
+    elif (real_field[pos[0]][pos[1]] == 0) : #CLEARS MULTIPLE SPACES ON SINGULAR QUERY
+        
+        if(user_field[pos[0]][pos[1]] == '-') :
+            if((pos[0]+1) >= 0 and (pos[0]+1) < dim) :
+                user_field[pos[0]][pos[1]] = real_field[pos[0]][pos[1]]
+                check_position(real_field, user_field, [pos[0]+1, pos[1]]) #checks the position on the below
+                if((pos[1]+1) >= 0 and (pos[1]+1) < dim) :
+                    check_position(real_field, user_field, [pos[0]+1, pos[1]+1]) #checks bottom right corner
+                if((pos[1]-1) >= 0 and (pos[1]-1) < dim) :
+                    check_position(real_field, user_field, [pos[0]+1, pos[1]-1]) #checks top right corner
+            if((pos[0]-1) >= 0 and (pos[0]-1) < dim) :
+                user_field[pos[0]][pos[1]] = real_field[pos[0]][pos[1]]
+                check_position(real_field, user_field, [pos[0]-1, pos[1]]) #checks the position on the above
+                if((pos[1]+1) >= 0 and (pos[1]+1) < dim) :
+                    check_position(real_field, user_field, [pos[0]-1, pos[1]+1]) #checks bottom left corner
+                if((pos[1]-1) >= 0 and (pos[1]-1) < dim) :
+                    check_position(real_field, user_field, [pos[0]-1, pos[1]-1]) #checks top left corner
+            if((pos[1]+1) >= 0 and (pos[1]+1) < dim) :
+                user_field[pos[0]][pos[1]] = real_field[pos[0]][pos[1]]
+                check_position(real_field, user_field, [pos[0], pos[1]+1]) #checks the position to the right
+                if((pos[0]+1) >= 0 and (pos[0]+1) < dim) :
+                    check_position(real_field, user_field, [pos[0]+1, pos[1]+1]) #checks bottom right corner
+                if((pos[0]-1) >= 0 and (pos[0]-1) < dim) :
+                    check_position(real_field, user_field, [pos[0]-1, pos[1]+1]) #checks top right corner
+            if((pos[1]-1) >= 0 and (pos[1]-1) < dim) :
+                user_field[pos[0]][pos[1]] = real_field[pos[0]][pos[1]]
+                check_position(real_field, user_field, [pos[0], pos[1]-1]) #checks the position to the left
+                if((pos[0]+1) >= 0 and (pos[0]+1) < dim) :
+                    check_position(real_field, user_field, [pos[0]+1, pos[1]-1]) #checks bottom right corner
+                if((pos[0]-1) >= 0 and (pos[0]-1) < dim) :
+                    check_position(real_field, user_field, [pos[0]-1, pos[1]-1]) #checks top right corner
+        
     else:
         user_field[pos[0]][pos[1]] = real_field[pos[0]][pos[1]]
     return True
