@@ -6,7 +6,9 @@ import time
 import copy
 from random import randint
 
-
+## create_minefield
+#creates the minefiled given a dimension, and a number of mines. Mines are spread randomly throughout field,
+#and then mine proximities are calculated and inserted into the spaces afterwards. 
 def create_minefield(dim,n): #creates a minefield given dim dimension and n mines.
     field=[]
     for i in range(dim): #minefield creation
@@ -67,6 +69,9 @@ def create_minefield(dim,n): #creates a minefield given dim dimension and n mine
 
     return field # returns a two dimensional array representing the field
 
+## create_userField
+#creates the user_field, which is a hidden version of the real field. Uses the real_field
+#for information on the game being played, while this field is displayed to the user and updated depending on their queries. 
 def create_userField(dim) : #field duplicate for user exploration
     field = []
     for i in range(dim) :
@@ -77,6 +82,8 @@ def create_userField(dim) : #field duplicate for user exploration
         field.append(c)
     return field
 
+## print_field
+#prints the field, could print either the user_field or the real_field.
 def print_field(field,dim): #prints out the field. 
     columns = rows = 0
     print(" ",end="      ")
@@ -107,10 +114,12 @@ def print_field(field,dim): #prints out the field.
         print()
     print()
 
-#check_position
+## check_position
 #real_field = actual 2Dimensional array used to hold data for mines, and mine proximities.
 #user_field = 2dimensional copy that holds data hidden and non hidden spaces as the game progresses.
 #   pos     = position queried by user.
+#determines whether the position queried is a mine, and returns False if so, True otherwise. Then, uses the query to unhide
+#all safe spaces around the position.
 def check_position(real_field, user_field, pos) : #checks if position queried is a mine, and if not, reveals space in user_field. 
     if (real_field[pos[0]][pos[1]] == 'X') : #Position queried is a mine; GAMEOVER
         user_field[pos[0]][pos[1]] = 'X'
@@ -154,7 +163,8 @@ def check_position(real_field, user_field, pos) : #checks if position queried is
     return True
     #TODO: add multispace clear when position queried has no mine proximities.
 
-
+## win_condition
+#determines if the win condition has been met after every position query. Returns True if so, False otherwise.
 def win_condition(user_field) : #Checks if win condition has been met.
     for i in range(len(user_field)) :
         for j in range(len(user_field)) :
