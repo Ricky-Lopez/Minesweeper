@@ -31,33 +31,34 @@ def create_minefield(dim,n): #creates a minefield given dim dimension and n mine
             if(field[i][j] == 'X') :
                 continue
 
-            if((i+1) >= 0 and (i+1) < dim) : # Checks to see if space to the right is within the field
-                if(field[i+1][j] == 'X') : #Checks to see if space to the right has a mine
+            if((i+1) >= 0 and (i+1) < dim) : # Checks to see if space to the left is within the field
+                if(field[i+1][j] == 'X') : #Checks to see if space to the left has a mine
                     mineCounter = mineCounter + 1
 
-                if((j+1) >= 0 and (j+1) < dim) : #Checks to see if the bottom right corner is within the field
-                    if(field[i+1][j+1] == 'X') : #Checks to see if bottom right corner has a mine
-                        mineCounter = mineCounter + 1
+            if((j+1) >= 0 and (j+1) < dim and (i+1) >= 0 and (i+1) < dim) : #Checks to see if the bottom left corner is within the field
+                if(field[i+1][j+1] == 'X') : #Checks to see if bottom left corner has a mine
+                    mineCounter = mineCounter + 1
                 
-                if((j-1) >= 0 and (j-1) < dim) : #Checks to see if top right corner is within the field
-                    if(field[i+1][j-1] == 'X') : #Checks to see if top right corner has a mine
-                        mineCounter = mineCounter + 1
-            if((i-1) >= 0 and (i-1) < dim) : #Checks to see if space to the left is within the field
-                if(field[i-1][j] == 'X') : #Checks to see if space to the left has a mine
+            if((j-1) >= 0 and (j-1) < dim and (i+1) >= 0 and (i+1) < dim) : #Checks to see if top left corner is within the field
+                if(field[i+1][j-1] == 'X') : #Checks to see if top left corner has a mine
                     mineCounter = mineCounter + 1
 
-                if((j+1) >= 0 and (j+1) < dim) : #Checks to see if the bottom left corner is within the field
-                    if(field[i-1][j+1] == 'X') : #Checks to see if bottom left corner has a mine
-                        mineCounter = mineCounter + 1
+            if((i-1) >= 0 and (i-1) < dim) : #Checks to see if space to the right is within the field
+                if(field[i-1][j] == 'X') : #Checks to see if space to the right has a mine
+                    mineCounter = mineCounter + 1
+
+            if((j+1) >= 0 and (j+1) < dim and (i-1) >- 0 and (i-1) < dim) : #Checks to see if the bottom right corner is within the field
+                if(field[i-1][j+1] == 'X') : #Checks to see if bottom right corner has a mine
+                    mineCounter = mineCounter + 1
                 
-                if((j-1) >= 0 and (j-1) < dim) : #Checks to see if top left corner is within the field
-                    if(field[i-1][j-1] == 'X') : #Checks to see if top left corner has a mine
-                        mineCounter = mineCounter + 1
+            if((j-1) >= 0 and (j-1) < dim and (i-1) >= 0 and (i-1) < dim) : #Checks to see if top right corner is within the field
+                if(field[i-1][j-1] == 'X') : #Checks to see if top right corner has a mine
+                    mineCounter = mineCounter + 1
 
             if((j+1) >= 0 and (j+1) < dim) : #Checks to see if the space below is within the field
                 if(field[i][j+1] == 'X') : #Checks to see if the space below has a mine
                     mineCounter = mineCounter + 1 
-            
+
             if((j-1) >= 0 and (j-1) < dim) : #Checks to see if the space above is within the field
                 if(field[i][j-1] == 'X') : #Checks to see if the space above has a mine 
                     mineCounter = mineCounter + 1
