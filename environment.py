@@ -66,7 +66,7 @@ def create_minefield(dim,n): #creates a minefield given dim dimension and n mine
                     mineCounter = mineCounter + 1
         
             field[i][j] = mineCounter       
-
+    
     return field # returns a two dimensional array representing the field
 
 ## create_userField
@@ -194,6 +194,7 @@ if __name__ == "__main__":
 
     if(whoPlays) :  #Agent plays
         #TODO add Agent algorithm.
+        agent.Basic_agent(user_field, dim, real_field)
         agent = 0
     else:           #User plays
         print("\n******** MINESWEEPER *********\nRULES:\n\n1. Enter the position you would like to query in the format \"x,y\".\n2. To flag, type \"flag \" before your position. (Don't forget the space!)\n3. To quit, enter \"q\".\n4. Have fun playing!\n\n")
