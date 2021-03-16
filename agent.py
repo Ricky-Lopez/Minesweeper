@@ -1,3 +1,4 @@
+import environment
 import queue
 import random
 import math
@@ -106,3 +107,21 @@ def Basic_agent(field, dim, environment) :
             print("Agent found a Safe Cell! (:")
             print_field(field,dim)
         return
+
+##Advanced_agent
+#If a hidden position is surrounded by two or more open, safe positions, we will perform strong inference. These open, safe positions shall be our "pivots".
+#Hidden position in question shall be our "anchor".
+
+#Perform a plug and chug of all positions surrounding pivots, by initially assigning our anchor as a mine or as safe. If we come to a contradiction, backtrack through tree
+#of all possible positions and try a new route through the tree. If we cannot come to a full possible assignment of the positions surrounding the pivots, then whatever we
+#assigned our anchor to be is not possible, and therefore we can conclude that the anchor must be the opposite.
+def Advanced_agent(field, dim, environment) :
+
+    #Basic_agent(field, dim, environment)
+    #TODO ensure proper integration of Basic_agent() algorithm.
+
+    for i in range(dim) :
+        for j in range(dim) :
+
+            if(field[i][j].isCovered) : #The position in question is not covered.
+                
