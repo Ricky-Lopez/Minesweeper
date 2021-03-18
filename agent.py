@@ -173,20 +173,6 @@ def Advanced_agent(field, dim, environment) :
 
                 if(adjacentClues > 1) : #There are two or more clues next to the position in question, therefore we shall perform strong inference.
                     
-                    for pivot in pivots: #Inserts all surrounding positions into a queue
-                        centerPosition = pivot.position
-                        surroundingPositions = []
-
-                        #Adds surrounding positions of each pivot into queue.
-                        surroundingPositions.append(field[centerPosition[0]+1][centerPosition[1]])
-                        surroundingPositions.append(field[centerPosition[0]-1][centerPosition[1]])
-                        surroundingPositions.append(field[centerPosition[0]+1][centerPosition[1]+1])
-                        surroundingPositions.append(field[centerPosition[0]-1][centerPosition[1]+1])
-                        surroundingPositions.append(field[centerPosition[0]+1][centerPosition[1]-1])
-                        surroundingPositions.append(field[centerPosition[0]-1][centerPosition[1]-1])
-                        surroundingPositions.append(field[centerPosition[0]][centerPosition[1]+1])
-                        surroundingPositions.append(field[centerPosition[0]][centerPosition[1]-1])
-
 
 
                     
