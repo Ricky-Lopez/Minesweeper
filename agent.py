@@ -172,7 +172,19 @@ def Advanced_agent(field, dim, environment) :
                         pivots.append(field[i][j-1])
 
                 if(adjacentClues > 1) : #There are two or more clues next to the position in question, therefore we shall perform strong inference.
+
+                    #threat - Integer which determines the overall "threat" of the position in question. Threat will be determined by the sum of
+                    # all proximity clues available / the amount of proximity clues used.
+                    threat = 0
+                    proximityCounter = 0
+
+                    for pivot in pivots :
+                        threat = threat + pivot.num_mines
+                        proximityCounter = proximityCounter + 1
                     
+                    #mineProb - double which determines our belief in whether or not there is a mine at the position in question. Determined by
+                    # taking threat and dividing it by the proximity counter . 
+                                            
 
 
                     
