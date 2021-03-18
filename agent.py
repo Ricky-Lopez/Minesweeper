@@ -12,8 +12,9 @@ class data:
         self.position = position #Saves the cells positions 
         self.surroundingPositions = surroundingPositions # Saves surrounding positions
         self.safe = safe # Determines if the cell is safe
-        self.covered = covered  # Determines if the cell is covered
-        self.mine = mine  # Determines if the cell is a mine
+        self.covered = covered  # Determines if the cell is not covered
+                        adjacentClues = adjacentClues + 1
+                        pivots.append(field[][])        self.mine = mine  # Determines if the cell is a mine
         self.num_mines = num_mines # Determines the number of surrounding mines
         self.num_safe = num_safe # Determines the number of safe squares
         self.num_covered = num_convered # Determines of hidden squares around it
@@ -108,20 +109,72 @@ def Basic_agent(field, dim, environment) :
             print_field(field,dim)
         return
 
+
+class Node:
+    def __init__ () :
+        
+
 ##Advanced_agent
 #If a hidden position is surrounded by two or more open, safe positions, we will perform strong inference. These open, safe positions shall be our "pivots".
 #Hidden position in question shall be our "anchor".
 
-#Perform a plug and chug of all positions surrounding pivots, by initially assigning our anchor as a mine or as safe. If we come to a contradiction, backtrack through tree
+#Perform a guess and check of all positions surrounding pivots, by initially assigning our anchor as a mine or as safe. If we come to a contradiction, backtrack through tree
 #of all possible positions and try a new route through the tree. If we cannot come to a full possible assignment of the positions surrounding the pivots, then whatever we
 #assigned our anchor to be is not possible, and therefore we can conclude that the anchor must be the opposite.
 def Advanced_agent(field, dim, environment) :
 
     #Basic_agent(field, dim, environment)
     #TODO ensure proper integration of Basic_agent() algorithm.
-
+    pivots = []
     for i in range(dim) :
         for j in range(dim) :
-
-            if(field[i][j].isCovered) : #The position in question is not covered.
+            adjacentClues = 0
+            if(field[i][j].covered) : #The position in question is covered.
                 
+                if((i+1) >= 0 and (i+1) < dim) : # Checks to see if space to the left is within the field
+                    if(not(field[i+1][j].covered) ) : #Checks to see if space to the left is not covered
+                        adjacentClues = adjacentClues + 1
+                        pivots.append(field[i+1][j])                        
+
+                if((j+1) >= 0 and (j+1) < dim and (i+1) >= 0 and (i+1) < dim) : #Checks to see if the bottom left corner is within the field
+                    if(not(field[i+1][j+1].covered) ) : #Checks to see if bottom left corner is not covered
+                        adjacentClues = adjacentClues + 1
+                        pivots.append(field[i+1][j+1])                        
+                    
+                if((j-1) >= 0 and (j-1) < dim and (i+1) >= 0 and (i+1) < dim) : #Checks to see if top left corner is within the field
+                    if(not(field[i+1][j-1].covered) ) : #Checks to see if top left corner is not covered
+                        adjacentClues = adjacentClues + 1
+                        pivots.append(field[i+1][j-1])                        
+
+                if((i-1) >= 0 and (i-1) < dim) : #Checks to see if space to the right is within the field
+                    if(not(field[i-1][j].covered) ) : #Checks to see if space to the right is not covered
+                        adjacentClues = adjacentClues + 1
+                        pivots.append(field[i-1][j])                        
+
+                if((j+1) >= 0 and (j+1) < dim and (i-1) >- 0 and (i-1) < dim) : #Checks to see if the bottom right corner is within the field
+                    if(not(field[i-1][j+1].covered) ) : #Checks to see if bottom right corner is not covered
+                        adjacentClues = adjacentClues + 1
+                        pivots.append(field[i-1][j+1])                        
+                    
+                if((j-1) >= 0 and (j-1) < dim and (i-1) >= 0 and (i-1) < dim) : #Checks to see if top right corner is within the field
+                    if(not(field[i-1][j-1].covered) ) : #Checks to see if top right corner is not covered
+                        adjacentClues = adjacentClues + 1
+                        pivots.append(field[i-1][j-1])                        
+
+                if((j+1) >= 0 and (j+1) < dim) : #Checks to see if the space below is within the field
+                    if(not(field[i][j+1].covered) ) : #Checks to see if the space below is not covered
+                        adjacentClues = adjacentClues + 1
+                        pivots.append(field[i][j+1])                         
+
+                if((j-1) >= 0 and (j-1) < dim) : #Checks to see if the space above is within the field
+                    if(not(field[i][j-1].covered) ) : #Checks to see if the space above is not covered
+                        adjacentClues = adjacentClues + 1
+                        pivots.append(field[i][j-1])
+
+                if(adjacentClues > 1) : #There are two or more clues next to the position in question, therefore we shall perform strong inference.
+                    
+                    for pivot in pivots:
+
+
+                        
+                    
