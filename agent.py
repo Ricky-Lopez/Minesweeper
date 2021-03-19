@@ -17,7 +17,7 @@ class data:
         self.num_safe = num_safe # Determines the number of safe squares
         self.num_covered = num_convered # Determines of hidden squares around it
         
-def settingDate(field, dim): 
+def settingDate(field, dim): # Sets the Data
     for i in range(dim):
         for j in range(dim):
             surrounding = []
@@ -36,7 +36,7 @@ def settingDate(field, dim):
             if((j+1) >= 0 and (j+1) < dim) : #Checks to see if the space below is within the field
                 surrounding.append([i,j+1])
             if((j-1) >= 0 and (j-1) < dim) : #Checks to see if the space above is within the field
-               surrounding.append([i,j-1])  
+                surrounding.append([i,j-1])  
             
             numCovered = len(surrounding)
                  
@@ -52,29 +52,29 @@ def print_field(field,dim): #prints out the field.
     print()
     for i in range(dim):
         for j in range(dim):
-           holdData = field[i][j]
-           if(holdData.covered == True):
-                print("?",end="    ")
-           if(holdData.safe == True ):
+            holdData = field[i][j]
+            if(holdData.mine == True):
+                print("M",end="    ") 
+            elif(holdData.safe == True ):
                 print(holdData.num_mines,end="    ")
-           if(holdData.mine == True):
-                print("M",end="    ")  
+            elif(holdData.covered == True):
+                print("?",end="    ")
+             
         print()
     print()
     
-def pickCell(field, previous):
-    if(previous == []):
+def pickCell(field, nextCell): #picks the next cell the search
+    if(nextCell == []):
         while(1):
             randX = randint(0, len(field)-1)
             randY = randint(0, len(field)-1)
             randomCell = field[randX][randY]
             if(randomCell.covered == True):
-                return [randX,randY]
-            
-         
-    return
+                return [randX,randY]        
+    nextData = nextCell.pop()  
+    return nextData
 
-def revealCell(search, environment):
+def revealCell(search, environment):# Reveals the cell
     x = search[0]
     y = search[1]
     return environment[x][y]
@@ -82,7 +82,8 @@ def revealCell(search, environment):
     
 
 #Algorithm to determine the next query given the user space. 
-def Basic_agent(field, dim, environment) :
+def Basic_agent(field, dim, environment, numMines) :
+    numRevealedMines = 0
     settingDate(field,dim)
     print_field(field, dim)
     searchNext = []
@@ -98,11 +99,60 @@ def Basic_agent(field, dim, environment) :
         if(reveal == "X"):
             searchData.mine = True
             print("Agent found a Mine! Agent Lost ):")
-            print_field(field,dim)
+            return
         else:
             searchData.safe = True
             searchData.num_mines = reveal
             searchData.num_safe = (8 - reveal)
+            coveredAmount = getCoveredNum(searchData.surroundingPositions, field)
             print("Agent found a Safe Cell! (:")
             print_field(field,dim)
-        return
+            if(reveal == 0):
+                coveredCells = findCovered(searchData.surroundingPositions, field, searchNext)
+                searchNext.extend(coveredCells)
+            if(reveal - numRevealedMines == coveredAmount):
+                for i in range(len(searchData.surroundingPositions)):
+                    position = searchData.surroundingPositions[i]
+                    x = position[0]
+                    y = position[1]
+                    holderCell = field[x][y]
+                    if(holderCell.covered == True):
+                        holderCell.mine = True
+                        numRevealedMines = numRevealedMines + 1
+                        print("Agent found mine")
+                        print_field(field,dim)
+            coveredAmount = getCoveredNum(searchData.surroundingPositions, field)
+            uncoveredAmount = 8 - coveredAmount
+            if(searchData.num_safe - uncoveredAmount == coveredAmount):
+                coveredCells = findCovered(searchData.surroundingPositions, field, searchNext)
+                searchNext.extend(coveredCells)
+        if(numRevealedMines == numMines):
+            print("Agent found all the mines")
+            print_field(field,dim)
+            return
+                    
+                
+                
+    return
+
+def findCovered(surrounding , field, searchNext): #Return all covered cells
+    coveredCell = []
+    for i in range(len(surrounding)):
+        position = surrounding[i]
+        x = position[0]
+        y = position[1]
+        check = field[x][y]
+        if(check.covered == True and searchNext.count(position) == 0 and check.mine == False):
+            coveredCell.append(surrounding[i])
+    return coveredCell
+
+def getCoveredNum(surrounding, field):# Return amount of covered cells 
+    coveredAmount = 0
+    for i in range(len(surrounding)):
+        position = surrounding[i]
+        x = position[0]
+        y = position[1]
+        check = field[x][y]
+        if(check.covered == True):
+            coveredAmount = coveredAmount + 1
+    return coveredAmount
