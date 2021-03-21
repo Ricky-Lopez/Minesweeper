@@ -29,7 +29,7 @@ def settingDate(field, dim): # Sets the Data
                 surrounding.append([i+1,j-1])
             if((i-1) >= 0 and (i-1) < dim) : #Checks to see if space to the right is within the field
                 surrounding.append([i-1,j])
-            if((j+1) >= 0 and (j+1) < dim and (i-1) >- 0 and (i-1) < dim) : #Checks to see if the bottom right corner is within the field
+            if((j+1) >= 0 and (j+1) < dim and (i-1) >= 0 and (i-1) < dim) : #Checks to see if the bottom right corner is within the field
                 surrounding.append([i-1,j+1])
             if((j-1) >= 0 and (j-1) < dim and (i-1) >= 0 and (i-1) < dim) : #Checks to see if top right corner is within the field
                 surrounding.append([i-1,j-1])
@@ -156,3 +156,5 @@ def getCoveredNum(surrounding, field):# Return amount of covered cells
         if(check.covered == True):
             coveredAmount = coveredAmount + 1
     return coveredAmount
+    
+    

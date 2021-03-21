@@ -5,6 +5,7 @@ import math
 import time
 import copy
 from random import randint
+import agent_improved
 
 ## create_minefield
 #creates the minefiled given a dimension, and a number of mines. Mines are spread randomly throughout field,
@@ -194,7 +195,7 @@ if __name__ == "__main__":
 
     if(whoPlays) :  #Agent plays
         #TODO add Agent algorithm.
-        agent.Basic_agent(user_field, dim, real_field, mines)
+        agent_improved.Improved_agent(user_field, dim, real_field, mines)
         agent = 0
     else:           #User plays
         print("\n******** MINESWEEPER *********\nRULES:\n\n1. Enter the position you would like to query in the format \"x,y\".\n2. To flag, type \"flag \" before your position. (Don't forget the space!)\n3. To quit, enter \"q\".\n4. Have fun playing!\n\n")
