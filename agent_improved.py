@@ -20,7 +20,7 @@ class data:
         self.num_safe = num_safe # Determines the number of safe squares
         self.num_covered = num_convered # Determines of hidden squares around it
         self.probability = probability #Determines the probability of contaning mines
-        self.surroundingProbability = surroundingProbability#Setermines the probability that a surrounding position is a mine
+        self.surroundingProbability = surroundingProbability#Determines the probability that a surrounding position is a mine
         
 
         
@@ -186,7 +186,7 @@ def updateProbability(field, dim, numMines):# Updates the probability of all cel
                         for l in range(len(Probs)):
                             average = average + Probs[l]
                         average = average / numUnCovered
-                        holderCell.probability = average
+                        holderCell.probability = average # average prob 
     
 
 

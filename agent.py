@@ -15,7 +15,7 @@ class data:
         self.mine = mine  # Determines if the cell is a mine
         self.num_mines = num_mines # Determines the number of surrounding mines
         self.num_safe = num_safe # Determines the number of safe squares
-        self.num_covered = num_convered # Determines of hidden squares around it
+        self.num_covered = num_convered # Determines of hidden squares around the cell
         
 def settingDate(field, dim): # Sets the Data
     for i in range(dim):
