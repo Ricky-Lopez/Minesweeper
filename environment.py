@@ -5,6 +5,7 @@ import math
 import time
 import copy
 from random import randint
+import agent_improved
 
 ## create_minefield
 #creates the minefiled given a dimension, and a number of mines. Mines are spread randomly throughout field,
@@ -49,7 +50,7 @@ def create_minefield(dim,n): #creates a minefield given dim dimension and n mine
                 if(field[i-1][j] == 'X') : #Checks to see if space to the right has a mine
                     mineCounter = mineCounter + 1
 
-            if((j+1) >= 0 and (j+1) < dim and (i-1) >- 0 and (i-1) < dim) : #Checks to see if the bottom right corner is within the field
+            if((j+1) >= 0 and (j+1) < dim and (i-1) >= 0 and (i-1) < dim) : #Checks to see if the bottom right corner is within the field
                 if(field[i-1][j+1] == 'X') : #Checks to see if bottom right corner has a mine
                     mineCounter = mineCounter + 1
                 
@@ -189,12 +190,13 @@ if __name__ == "__main__":
 
     real_field = create_minefield(dim, mines)
     user_field = create_userField(dim)
-    #print_field(real_field, dim)
+    print_field(real_field, dim)
     #print_field(user_field, dim)
 
     if(whoPlays) :  #Agent plays
         #TODO add Agent algorithm.
-        agent.Basic_agent(user_field, dim, real_field)
+        agent_improved.Improved_agent(user_field, dim, real_field, mines) #call improved agent
+        print_field(real_field, dim)
         agent = 0
     else:           #User plays
         print("\n******** MINESWEEPER *********\nRULES:\n\n1. Enter the position you would like to query in the format \"x,y\".\n2. To flag, type \"flag \" before your position. (Don't forget the space!)\n3. To quit, enter \"q\".\n4. Have fun playing!\n\n")
@@ -220,4 +222,3 @@ if __name__ == "__main__":
                     print_field(user_field, dim)
                 except ValueError:
                     print("Invalid format. Please try again.\n")
-
